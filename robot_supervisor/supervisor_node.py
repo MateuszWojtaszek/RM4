@@ -41,7 +41,7 @@ VACATE_DISTANCE_THRESHOLD = 0.8
 TARGET_BASE_ORIENTATION = math.pi
 BASE_ORIENTATION_TOLERANCE = 0.05
 
-# Zaktualizowane stałe dla nowego unikania kolizji
+# Zaktualizowane stałe unikania kolizji
 COLLISION_RESOLUTION_TIMEOUT_SECONDS = 4.0
 COLLISION_MANEUVER_TURN_ANGLE = math.pi / 2
 COLLISION_MANEUVER_DRIVE_DIST = 0.7
@@ -145,9 +145,9 @@ class RobotSupervisorNode(Node):
                 Odometry, f"/{robot_id}/odom", partial(self.odometry_callback, robot_id=robot_id), 10)
             self.robot_cmd_vel_publishers[robot_id] = self.create_publisher(
                 Twist, f"/{robot_id}/cmd_vel", 10)
-            self.robot_odom_subscribers[f"{robot_id}_scan"] = self.create_subscription(
+            self.robot_odom_subscribers[f"{robot_id}_scan"] = self.create_subscription( 
                 LaserScan, f"/{robot_id}/scan", partial(self.scan_callback, robot_id=robot_id), qos_sensor_data)
-
+    #przypisanie pozycji robotów w bazie oraz Stacji Bazowej i docelowej
     def _initialize_locations(self):
         for i in range(NUM_ROBOTS):
             self.base_stations.append({"id": i + 1, "coordinates": (BASE_START_X + i * BASE_SPACING, BASE_Y), "occupant_robot_id": f"tb0_{i}" })
